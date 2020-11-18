@@ -1,10 +1,54 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title>Weather App</title>
-    </head>
-    <body>
-        
-    </body>
+
+<head>
+    <meta charset="utf-8">
+    <title>Weather App</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <main>
+        <div class="date">
+            <h1 class="date-heading day"></h1><br>
+            <h2 class="date-heading month"></h2>
+        </div>
+
+        <div class="container">
+            <div class="search-box">
+                <input type="search" name="" value="" id="search">
+                <label for="#search">
+                    <button><i class="material-icons">search</i> Search</button>
+                </label>
+            </div>
+
+            <div class="cards">
+                <div class="card">
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="text/javascript">
+        (function() {
+            'use strict';
+            let date = new Date();
+            let dayString = date.toLocaleDateString("default", {
+                weekday: "long"
+            });
+            let day = date.getDate();
+            let month = date.toLocaleDateString("default", {
+                month: "long"
+            });
+
+            document.querySelector("h1.day").textContent = dayString;
+            document.querySelector("h2.month").textContent = day + " " + month;
+        }());
+    </script>
+</body>
+
 </html>

@@ -1,4 +1,114 @@
 *{
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
+}
+
+html{
+    --primary: #ff8ba7;
+    --secondary: #ffc6c7;
+    --background: #faeee7;
+    --black: #33272a;
+    --gray: #594a4e;
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family: 'Lato', sans-serif;
+}
+
+main{
+    background-color: var(--background);
+}
+
+.date {
+    position: absolute;
+    top: 3rem;
+    left: 4rem;
+}
+
+.date-heading{
+    color: var(--black);
+    display: inline-block;
+}
+
+.day{
+    font-size: 5.5rem;
+    font-weight: 700;
+}
+
+.month{
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10rem;
+}
+
+.search-box{
+
+}
+
+#search{
+    border: none;
+    padding: 1rem;
+    font-size: 2rem;
+    width: 50rem;
+    color: var(--gray);
+    border-radius: .5rem;
+    border: 1px solid rgba(0,0,0,.2);
+}
+
+#search:focus{
+    outline: none;
+}
+
+label{
+
+}
+
+button{
+    border: none;
+    color: #fff;
+    background-color: var(--primary);
+    font-size: 2rem;
+    border-radius: .3rem;
+    cursor: pointer;
+    padding: 1rem;
+    font-weight: 700;
+}
+
+button:focus{
+    outline: none;
+}
+
+button:hover{
+
+}
+
+i{
+    vertical-align: bottom;
+}
+
+.cards{
+    margin-top: 5rem;
+    display: grid;
+    grid-auto-flow: column;
+    justify-items: center;
+    align-items: center;
+    grid-column-gap: 4rem;
+}
+
+.card{
+    width: 30rem;
+    height: 45rem;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,.4);
+    border-radius: .4rem;
 }
