@@ -18,12 +18,10 @@
         </div>
 
         <div class="container">
-            <div class="search-box">
-                <input type="search" name="" value="" id="search">
-                <label for="#search">
-                    <button><i class="material-icons">search</i> Search</button>
-                </label>
-            </div>
+            <form class="search-box">
+                <input type="text" name="" value="" id="search" placeholder="Search for a city">
+                <button type="submit"><i class="material-icons">search</i> Search</button>
+            </form>
 
             <div class="cards">
                 <div class="card">
@@ -49,6 +47,8 @@
             document.querySelector("h2.month").textContent = day + " " + month;
         }());
     </script>
+
+    <script src="./main.js" charset="utf-8"></script>
 </body>
 
 </html>
