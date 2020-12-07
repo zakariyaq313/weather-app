@@ -113,4 +113,9 @@ i{
     background-color: #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,.4);
     border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 15rem 0;
 }
