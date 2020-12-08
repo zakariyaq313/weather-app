@@ -5,21 +5,15 @@
 }
 
 html{
-    --primary: #ff8ba7;
-    --secondary: #ffc6c7;
-    --background: #faeee7;
-    --black: #33272a;
-    --gray: #594a4e;
+    --dark: #202124;
     font-size: 62.5%;
     scroll-behavior: smooth;
 }
 
 body{
-    font-family: 'Lato', sans-serif;
-}
-
-main{
-    background-color: var(--background);
+    /* font-family: 'Lato', sans-serif; */
+    font-family: 'Ubuntu', sans-serif;
+    background-color: var(--dark);
 }
 
 .date {
@@ -29,13 +23,41 @@ main{
 }
 
 .date-heading{
-    color: var(--black);
     display: inline-block;
+    background: linear-gradient(264.51deg,
+        #FFE580 4.38%, #FF7571 11.51%,
+        #FF7270 25.06%, #EA5DAD 36.04%,
+        #C2A0FD 47.63%, #9867F0 59.03%,
+        #3BF0E4 69.96%, #33CE43 83.74%,
+        #B2F4B6 95.62%);
+
+    background-position: 58% 50%;
+    background-size: 500%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-animation: gradient-shift 30s ease infinite;
+    animation: gradient-shift 30s ease infinite;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes gradient-shift {
+    0% {
+        background-position: 58% 50%;
+    }
+    25% {
+        background-position: 100% 0%;
+    }
+    75% {
+        background-position: 10% 50%;
+    }
+    100% {
+        background-position: 58% 50%;
+    }
 }
 
 .day{
-    font-size: 5.5rem;
-    font-weight: 700;
+    font-size: 4.5rem;
+    font-weight: 500;
 }
 
 .month{
@@ -48,58 +70,62 @@ main{
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10rem;
+    padding: 4rem;
 }
 
 .search-box{
-
+    position: relative;
 }
 
 #search{
     border: none;
-    padding: 1rem;
-    font-size: 2rem;
-    width: 30rem;
-    color: var(--gray);
-    background-color: inherit;
-    margin-right: 2rem;
-    border-bottom: 2px solid rgba(0,0,0,.2);
+    font-size: 1.6rem;
+    font-weight: 100;
+    width: 50rem;
+    color: #fff;
+    background-color: rgba(128, 128, 128, .3);
+    margin-right: 1rem;
+    border-radius: .6rem;
+    padding: 1.5rem 5rem;
 }
 
 #search:focus{
     outline: none;
-    background-color: inherit;
+    color: rgba(0, 0, 0, .9);
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .4);
 }
 
-label{
-
+#search::placeholder{
+    color: rgba(128, 128, 128, 1);
 }
 
-button{
-    border: none;
-    color: #fff;
-    background-color: var(--primary);
-    font-size: 2rem;
-    border-radius: .3rem;
+.icon{
+    color: rgba(128, 128, 128, 1);
+    font-size: 2.4rem;
+    border-radius: 10rem;
     cursor: pointer;
     padding: 1rem;
-    font-weight: 700;
+    margin: 0 .5rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
-button:focus{
-    outline: none;
+.icon:first-of-type{
+    left: 0rem;
 }
 
-button:hover{
-
+.icon:last-of-type{
+    right: 1rem;
 }
 
-i{
-    vertical-align: bottom;
+.icon:hover{
+    background-color: rgba(128, 128, 128, .2);
 }
 
 .cards{
-    margin-top: 5rem;
+    margin-top: 8rem;
     display: grid;
     grid-auto-flow: column;
     justify-items: center;
@@ -110,12 +136,43 @@ i{
 .card{
     width: 30rem;
     height: 45rem;
-    background-color: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,.4);
-    border-radius: 2rem;
+    background-image: linear-gradient( 109.6deg,  rgba(121,203,202,1) 11.2%, rgba(119,161,211,1) 91.1% );    box-shadow: 0 2px 8px rgba(0,0,0,.4);
+    border-radius: 1rem;
+    color: #fff;
+    padding: 5rem 3rem;
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    flex-direction: column-reverse;
+    justify-content: space-between;
     align-items: center;
-    padding: 15rem 0;
+    transition: opacity 1s;
+}
+
+.weather-icon{
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-around;
+   width: 80%;
+}
+
+.details{
+    margin-top: 45%;
+}
+
+.image{
+    width: 8rem;
+}
+
+.weather{
+    font-size: 2rem;
+}
+
+.temp{
+    font-size: 2rem;
+}
+
+.city{
+    font-size: 3.5rem;
+    margin-top: 1rem;
+    font-weight: 300;
 }

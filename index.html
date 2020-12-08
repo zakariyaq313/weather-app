@@ -6,6 +6,8 @@
     <title>Weather App</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -20,20 +22,65 @@
         <div class="container">
             <form class="search-box">
                 <input type="text" name="" value="" id="search" placeholder="Search for a city">
-                <button type="submit"><i class="material-icons">search</i> Search</button>
+                <i class="material-icons icon">search</i>
+                <i class="material-icons icon">close</i>
             </form>
 
             <div class="cards">
+
                 <div class="card">
-                    <p class="weather"></p>
-                    <h1 class="city"></h1>
-                    <h2 class="temp"></h2>
+                    <span class="weather-icon">
+                        <img src="" alt="" class="image">
+                        <p class="weather"></p>
+                    </span>
+                    <span class="details">
+                        <h2 class="temp"></h2>
+                        <h1 class="city"></h1>
+                    </span>
                 </div>
+
+                <div class="card">
+                    <span class="weather-icon">
+                        <img src="" alt="" class="image">
+                        <p class="weather"></p>
+                    </span>
+                    <span class="details">
+                        <h2 class="temp"></h2>
+                        <h1 class="city"></h1>
+                    </span>
+                </div>
+
+                <div class="card">
+                    <span class="weather-icon">
+                        <img src="" alt="" class="image">
+                        <p class="weather"></p>
+                    </span>
+                    <span class="details">
+                        <h2 class="temp"></h2>
+                        <h1 class="city"></h1>
+                    </span>
+                </div>
+
+                <div class="card">
+                    <span class="weather-icon">
+                        <img src="" alt="" class="image">
+                        <p class="weather"></p>
+                    </span>
+                    <span class="details">
+                        <h2 class="temp"></h2>
+                        <h1 class="city"></h1>
+                    </span>
+                </div>
+                
             </div>
         </div>
     </main>
 
+    <!-- <footer><div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></footer> -->
+
     <script type="text/javascript">
+
+        // Date and week day 
         (function() {
             'use strict';
             let date = new Date();
@@ -46,7 +93,7 @@
             });
 
             document.querySelector("h1.day").textContent = dayString;
-            document.querySelector("h2.month").textContent = day + " " + month;
+            document.querySelector("h2.month").textContent = `${day} ${month}`;
         }());
     </script>
 
