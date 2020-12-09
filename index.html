@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
@@ -14,88 +15,69 @@
 
 <body>
     <main>
-        <div class="date">
-            <h1 class="date-heading day"></h1><br>
-            <h2 class="date-heading month"></h2>
-        </div>
-
         <div class="container">
+            <div class="date">
+                <h1 class="date-heading day"></h1><br>
+                <h2 class="date-heading month"></h2>
+            </div>
+
             <form class="search-box">
                 <input type="text" name="" value="" id="search" placeholder="Search for a city">
                 <i class="material-icons icon">search</i>
                 <i class="material-icons icon">close</i>
             </form>
+        </div>
 
-            <div class="cards">
+        <div class="cards">
 
-                <div class="card">
-                    <span class="weather-icon">
-                        <img src="" alt="" class="image">
-                        <p class="weather"></p>
-                    </span>
-                    <span class="details">
-                        <h2 class="temp"></h2>
-                        <h1 class="city"></h1>
-                    </span>
-                </div>
-
-                <div class="card">
-                    <span class="weather-icon">
-                        <img src="" alt="" class="image">
-                        <p class="weather"></p>
-                    </span>
-                    <span class="details">
-                        <h2 class="temp"></h2>
-                        <h1 class="city"></h1>
-                    </span>
-                </div>
-
-                <div class="card">
-                    <span class="weather-icon">
-                        <img src="" alt="" class="image">
-                        <p class="weather"></p>
-                    </span>
-                    <span class="details">
-                        <h2 class="temp"></h2>
-                        <h1 class="city"></h1>
-                    </span>
-                </div>
-
-                <div class="card">
-                    <span class="weather-icon">
-                        <img src="" alt="" class="image">
-                        <p class="weather"></p>
-                    </span>
-                    <span class="details">
-                        <h2 class="temp"></h2>
-                        <h1 class="city"></h1>
-                    </span>
-                </div>
-                
+            <div class="card">
+                <span class="weather-icon">
+                    <img src="" alt="" class="image">
+                    <p class="weather"></p>
+                </span>
+                <span class="details">
+                    <h2 class="temp"></h2>
+                    <h1 class="city"></h1>
+                </span>
             </div>
+
+            <div class="card">
+                <span class="weather-icon">
+                    <img src="" alt="" class="image">
+                    <p class="weather"></p>
+                </span>
+                <span class="details">
+                    <h2 class="temp"></h2>
+                    <h1 class="city"></h1>
+                </span>
+            </div>
+
+            <div class="card">
+                <span class="weather-icon">
+                    <img src="" alt="" class="image">
+                    <p class="weather"></p>
+                </span>
+                <span class="details">
+                    <h2 class="temp"></h2>
+                    <h1 class="city"></h1>
+                </span>
+            </div>
+
+            <div class="card">
+                <span class="weather-icon">
+                    <img src="" alt="" class="image">
+                    <p class="weather"></p>
+                </span>
+                <span class="details">
+                    <h2 class="temp"></h2>
+                    <h1 class="city"></h1>
+                </span>
+            </div>
+
         </div>
     </main>
 
     <!-- <footer><div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></footer> -->
-
-    <script type="text/javascript">
-
-        // Date and week day 
-        (function() {
-            'use strict';
-            let date = new Date();
-            let dayString = date.toLocaleDateString("default", {
-                weekday: "long"
-            });
-            let day = date.getDate();
-            let month = date.toLocaleDateString("default", {
-                month: "long"
-            });
-
-            document.querySelector("h1.day").textContent = dayString;
-            document.querySelector("h2.month").textContent = `${day} ${month}`;
-        }());
-    </script>
 
     <script src="./main.js" charset="utf-8"></script>
 </body>

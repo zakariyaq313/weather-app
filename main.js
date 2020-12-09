@@ -1,3 +1,19 @@
+// Date and week day 
+(function () {
+    'use strict';
+    let date = new Date();
+    let dayString = date.toLocaleDateString("default", {
+        weekday: "long"
+    });
+    let day = date.getDate();
+    let month = date.toLocaleDateString("default", {
+        month: "long"
+    });
+
+    document.querySelector("h1.day").textContent = dayString;
+    document.querySelector("h2.month").textContent = `${day} ${month}`;
+}());
+
 let userInput = document.getElementById("search"),
     button = document.querySelectorAll("i.icon")[0],
     erase = document.querySelectorAll("i.icon")[1];
@@ -73,34 +89,37 @@ function getWeather() {
 }
 
 let cards = document.querySelectorAll("div.card");
-
-function newSearch() {
+function removeCard() {
     for (let i = 0; i < cards.length; i++) {
-        // cards[i].style.opacity = 0;
         cards[i].remove();
     }
-    
+}
+
+function addCard() {
     let newCard = document.createElement("div");
-    document.querySelector("div.cards").appendChild(newCard);
-    newCard.innerHTML = `<span class="weather-icon">
-                <img src="" alt="" class="image">
-                <p class="weather"></p>
-                </span>
-                <span class="details">
-                <h2 class="temp"></h2>
-                <h1 class="city"></h1>
-                </span>`;
+        newCard.classList.add("card");
+        document.querySelector("div.cards").appendChild(newCard);
+        newCard.innerHTML = `<span class="weather-icon">
+                                <img src="" alt="" class="image">
+                                <p class="weather"></p>
+                            </span>
+                            <span class="details">
+                                <h2 class="temp"></h2>
+                                <h1 class="city"></h1>
+                            </span>`;
 }
 
 button.addEventListener("click", () => {
     getWeather();
-    newSearch();
+    removeCard();
+    addCard();
 })
 
 userInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         getWeather();
-        newSearch();
+        removeCard();
+        addCard();
     }
 })
 
