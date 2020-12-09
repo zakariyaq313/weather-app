@@ -79,9 +79,19 @@ function setWeather(data, count) {
     }
 }
 
+function handleError(){
+    document.querySelector("div.cards").style.display = "none";
+    document.querySelector("div.not-found").style.display = "flex";
+}
+
+function errorSolved(){
+    document.querySelector("div.cards").style.display = "grid";
+    document.querySelector("div.not-found").style.display = "none";
+}
+
 // Get weather from API 
 function getWeather(count, cityName) {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName || userInput.value}&appid=b0c90ee33b0ac413a9614d297708aa07`) 
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=b0c90ee33b0ac413a9614d297708aa07`) 
     .then( (response) => { 
         return response.json();
     })
@@ -91,26 +101,25 @@ function getWeather(count, cityName) {
     })
 
     .catch( () => {
-      // catch any errors
-      console.log("Fuck that");
+      handleError();
     });
 }
 
 let defaultCities = () => {
-    getWeather(0, "Delhi");
-    getWeather(1, "Pune");
-    getWeather(2, "Bangalore");
-    getWeather(3, "Mumbai");
+    getWeather(0, "New York");
+    getWeather(1, "Mumbai");
+    getWeather(2, "London");
+    getWeather(3, "Moscow");
 }
 
 defaultCities();
 
 function removeCards() {
-    let cards = document.querySelectorAll("div.card");    
+    let cards = document.querySelectorAll("div.card");
     for (let i = 0; i < cards.length; i++) {
         cards[i].remove();
     }
-} // In order to remove default divs
+}
 
 function addCard() {
     let newCard = document.createElement("div");
@@ -126,21 +135,27 @@ function addCard() {
                             </span>`;
     document.querySelector("div.cards").style.gridTemplateColumns = "1fr";
     getWeather(0, userInput.value);
-} //In order to add new div
+}
+
+function mainHandler(){
+    if (userInput.value.trim() === "") {
+        //do nothing
+    } else {
+        removeCards();
+        addCard();   
+        if (document.querySelector("div.not-found").style.display = "flex") {
+            errorSolved();
+        }
+    }
+}
 
 button.addEventListener("click", () => {
-    removeCards();
-    addCard();
+    mainHandler();
 })
 
 userInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-        if (userInput.value.trim() === "") {
-            console.log("This fucker right here");
-        } else {
-            removeCards();
-            addCard();   
-        }
+        mainHandler();
     }
 })
 
