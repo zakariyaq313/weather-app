@@ -77,6 +77,16 @@ function setWeather(data, count) {
             card.style.backgroundImage = "radial-gradient( circle farthest-corner at 10% 20%,  rgba(253,101,133,1) 0%, rgba(255,211,165,1) 90% )";
             break;
     }
+
+    // switch (Math.round(parseFloat(data.main.temp) - 273.15)) {
+    //     case "<= 5":
+    //         image.src = "images/snow.svg";
+    //         card.style.backgroundImage = "radial-gradient(circle 465px at -15.1% -25%, rgba(17,130,193,1) 0%, rgba(67,166,238,1) 49%, rgba(126,203,244,1) 90.2% )";
+    //         break;
+    
+    //     default:
+    //         break;
+    // }
 }
 
 function handleError(){
