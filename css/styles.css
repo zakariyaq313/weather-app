@@ -11,8 +11,7 @@ html{
 }
 
 body{
-    /* font-family: 'Lato', sans-serif; */
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Lato', sans-serif;
     background-color: var(--dark);
     position: relative;
     padding-bottom: 5rem;
@@ -161,19 +160,25 @@ main{
 }
 
 .details{
-    margin-top: 45%;
+    /* margin-top: 45%; */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
-.image{
-    width: 8rem;
+.main-content{
+    margin: 0 auto;
 }
 
-.weather{
-    font-size: 2rem;
+
+.time{
+    font-size: 1.4rem;
 }
 
 .temp{
     font-size: 2rem;
+    margin-top: 9rem;
 }
 
 .city{
@@ -182,6 +187,13 @@ main{
     font-weight: 300;
 }
 
+.image{
+    width: 8rem;
+}
+
+.weather{
+    font-size: 2.2rem;
+}
 .not-found{
     margin: 10rem 0;
     display: none;
@@ -201,6 +213,7 @@ main{
 }
 
 .copyright{
+    font-family: 'Ubuntu', sans-serif;
     color: #fff;
     font-weight: 200;
     font-size: 1.2rem;
@@ -279,6 +292,30 @@ a:link, a:visited{
     }
 
     .details{
+        width: 50%;
+    }
+
+    .main-content{
+        margin-bottom: 3rem;
+    }
+
+    .time{
+        margin-bottom: 3rem;
+    }
+
+    .temp{
         margin-top: 0;
     }
+
+    .city{
+        margin-top: 0;
+    }
+
+    .weather{
+        margin-top: 1rem;
+    }
+}
+
+.test{
+    background-image: linear-gradient(to bottom right, pink, lightblue);
 }

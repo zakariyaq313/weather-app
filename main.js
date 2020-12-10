@@ -28,32 +28,53 @@ document.querySelector("form").addEventListener("submit", (e) => {
 
 // Fill data in div card 
 function setWeather(data, count) {
-    let card = document.querySelectorAll("div.card")[count],
+    let currentTime = new Date().getUTCHours() + Math.round(data.timezone / 3600),
+        card = document.querySelectorAll("div.card")[count],
         image = card.children[0].children[0],
         celsius = `${Math.round(parseFloat(data.main.temp) - 273.15)}°C`;
+        minutes = new Date() + Math.round(data.timezone / 216000),
+        // console.log(minutes);
 
     card.children[0].children[1].textContent = data.weather[0].main;
-    card.children[1].children[1].textContent = data.name;
-    card.children[1].children[0].textContent = celsius;
+    // card.children[1].children[0].textContent = `${currentTime}`;
+    card.children[1].children[1].children[1].textContent = data.name;
+    card.children[1].children[1].children[0].textContent = celsius;
 
     switch (data.weather[0].main) {
-        case "Haze":
+        
         case "Smoke":
-        case "Mist":
+            if (data.weather[0].main === "Smoke") {
+                image.src = "images/global-warming.svg";
+            } else {
+                image.src = "images/fog.svg";   
+            }
+            card.style.backgroundImage = "linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%)";
+            break;
+        
         case "Dust":
+        case "Haze":
+        case "Mist":
         case "Fog":
-            image.src = "images/global-warming.svg";
-            card.style.backgroundImage = "radial-gradient( circle farthest-corner at 10% 20%,  rgba(255,229,168,1) 0%, rgba(251,174,222,1) 100.7% )";
+            if ((currentTime >= 7) && (currentTime <= 19)) {
+                image.src = "images/fog.svg";
+            } else {
+                image.src = "images/fog-alt.svg";
+            }
+            card.style.backgroundImage = "linear-gradient(to bottom right, #355c7d, #6c5b7b, #c06c84)";
             break;
 
         case "Clouds":
-            image.src = "images/cloudy.svg";
-            card.style.backgroundImage = "linear-gradient( 114.2deg,  rgba(121,194,243,1) 22.6%, rgba(255,180,239,1) 67.7% )";
+            if ((currentTime >= 7) && (currentTime <= 19)) {
+                image.src = "images/cloudy.svg";
+            } else {
+                image.src = "images/cloudy-alt.svg";
+            }
+            card.style.backgroundImage = "linear-gradient(to bottom right, #3494e6, #ec6ead)";
             break;
 
         case "Snow":
             image.src = "images/snow.svg";
-            card.style.backgroundImage = "radial-gradient(circle 465px at -15.1% -25%, rgba(17,130,193,1) 0%, rgba(67,166,238,1) 49%, rgba(126,203,244,1) 90.2% )";
+            card.style.backgroundImage = "linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)";
             break;
 
         case "Thunderstorm":
@@ -62,14 +83,27 @@ function setWeather(data, count) {
             break;
 
         case "Clear":
-            image.src = "images/sun.svg";
-            card.style.backgroundImage = "linear-gradient(to bottom right, #b3ffab, #12fff7)";
+            card.style.backgroundImage = "linear-gradient(to bottom right, #00b09b, #96c93d)";
+
+            if ((currentTime >= 7) && (currentTime <= 19)) {
+                if ((Math.round(parseFloat(data.main.temp) - 273.15)) <= 0 ) {
+                    image.src = "images/snowflake.svg";
+                    card.style.backgroundImage = "linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)";
+                } else if ((Math.round(parseFloat(data.main.temp) - 273.15)) >= 30) {
+                    image.src = "images/heatwave.svg";
+                } else {
+                    image.src = "images/sunny.svg";
+                }
+            } else {
+                image.src = "images/moon.svg";
+                card.style.backgroundImage = "linear-gradient(to bottom right, #485563, #29323c)";
+            }
             break;
         
         case "Rain":
         case "Drizzle":
             image.src = "images/rainy.svg";
-            card.style.backgroundImage = "radial-gradient( circle 465px at -15.1% -25%,  rgba(17,130,193,1) 0%, rgba(67,166,238,1) 49%, rgba(126,203,244,1) 90.2% )";
+            card.style.backgroundImage = "linear-gradient(to bottom right, #00c6ff, #0072ff)";
             break;
         
         default:
@@ -77,16 +111,6 @@ function setWeather(data, count) {
             card.style.backgroundImage = "radial-gradient( circle farthest-corner at 10% 20%,  rgba(253,101,133,1) 0%, rgba(255,211,165,1) 90% )";
             break;
     }
-
-    // switch (Math.round(parseFloat(data.main.temp) - 273.15)) {
-    //     case "<= 5":
-    //         image.src = "images/snow.svg";
-    //         card.style.backgroundImage = "radial-gradient(circle 465px at -15.1% -25%, rgba(17,130,193,1) 0%, rgba(67,166,238,1) 49%, rgba(126,203,244,1) 90.2% )";
-    //         break;
-    
-    //     default:
-    //         break;
-    // }
 }
 
 function handleError(){
@@ -108,21 +132,13 @@ function getWeather(count, cityName) {
     
     .then( (data) => {
       setWeather(data, count);
+      console.log(data);
     })
 
     .catch( () => {
       handleError();
     });
 }
-
-let defaultCities = () => {
-    getWeather(0, "New York");
-    getWeather(1, "Mumbai");
-    getWeather(2, "London");
-    getWeather(3, "Moscow");
-}
-
-defaultCities();
 
 function removeCards() {
     let cards = document.querySelectorAll("div.card");
@@ -131,7 +147,7 @@ function removeCards() {
     }
 }
 
-function addCard() {
+function addCard(index, cityName) {
     let newCard = document.createElement("div");
         newCard.classList.add("card");
         document.querySelector("div.cards").appendChild(newCard);
@@ -140,23 +156,40 @@ function addCard() {
                                 <p class="weather"></p>
                             </span>
                             <span class="details">
-                                <h2 class="temp"></h2>
-                                <h1 class="city"></h1>
+                                <p class="time"></p>
+                                <span class="main-content">
+                                    <h2 class="temp"></h2>
+                                    <h1 class="city"></h1>
+                                </span>
                             </span>`;
-    document.querySelector("div.cards").style.gridTemplateColumns = "1fr";
-    getWeather(0, userInput.value);
+    getWeather(index, cityName);
 }
+
+function newCity() {
+    addCard(0, userInput.value);
+}
+
+let defaultCities = () => {
+    addCard(0, "New York");
+    addCard(1, "Mumbai");
+    addCard(2, "London");
+    addCard(3, "Moscow");
+}
+
+defaultCities();
 
 function mainHandler(){
     if (userInput.value.trim() === "") {
         //do nothing
     } else {
         removeCards();
-        addCard();   
+        newCity();   
         if (document.querySelector("div.not-found").style.display = "flex") {
             errorSolved();
         }
     }
+    
+    document.querySelector("div.cards").style.gridTemplateColumns = "1fr";
 }
 
 button.addEventListener("click", () => {
