@@ -133,7 +133,7 @@ main{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     place-items: center;
-    grid-gap: 8rem 4rem;
+    grid-gap: 4rem;
 }
 
 .card{
@@ -238,7 +238,7 @@ a:link, a:visited{
 @media(max-width: 1250px) {
     .cards{
         grid-template-columns: 1fr 1fr;
-        grid-gap: 10rem;
+        grid-gap: 8rem;
         margin-top: 10rem;
         padding-bottom: 5rem;
     }
@@ -249,14 +249,12 @@ a:link, a:visited{
     }
 }
 
-@media(max-width: 830px) {
-    .cards{
-        grid-template-columns: 1fr;
-    }
-}
-
 @media(max-width: 750px) {
     .container{
+        grid-template-columns: 1fr;
+    }
+
+    .cards{
         grid-template-columns: 1fr;
         grid-gap: 5rem;
     }
@@ -270,7 +268,7 @@ a:link, a:visited{
     }
 
     .search-box{
-        margin-top: 2rem;
+        margin-top: 5rem;
     }
 }
 
@@ -314,5 +312,11 @@ a:link, a:visited{
 
     .weather{
         margin-top: 1rem;
+    }
+}
+
+@media(max-width: 340px) {
+    html{
+        font-size: 50%;
     }
 }

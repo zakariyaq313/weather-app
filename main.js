@@ -124,9 +124,10 @@ function setWeather(data, count) {
             break;
 
         case "Clear":
-            card.style.backgroundImage = "linear-gradient(to bottom right, #00b09b, #96c93d)";
+            // card.style.backgroundImage = "linear-gradient(to bottom right, #00b09b, #96c93d)";
+            card.style.backgroundImage = "linear-gradient( to bottom right,  rgba(255,219,47,.95) 11.2%, rgba(244,253,0,.95) 100.2% )";
 
-            if ((currentHour >= 7) && (currentHour <= 19)) {
+            if ((currentHour >= 7) && (currentHour < 18)) {
                 if ((Math.round(parseFloat(data.main.temp) - 273.15)) <= 0 ) {
                     image.src = "images/snowflake.svg";
                     card.style.backgroundImage = "linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)";
@@ -136,7 +137,11 @@ function setWeather(data, count) {
                     image.src = "images/sunny.svg";
                 }
             } else {
-                image.src = "images/moon.svg";
+                if ((Math.round(parseFloat(data.main.temp) - 273.15)) <= 0 ) {
+                    image.src = "images/snowflake.svg";
+                } else {
+                    image.src = "images/moon.svg";
+                }
                 card.style.backgroundImage = "linear-gradient(to bottom right, #485563, #29323c)";
             }
             break;
