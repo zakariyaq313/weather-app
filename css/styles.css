@@ -133,7 +133,7 @@ main{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     place-items: center;
-    grid-gap: 4rem;
+    grid-gap: 8rem 4rem;
 }
 
 .card{
@@ -160,7 +160,6 @@ main{
 }
 
 .details{
-    /* margin-top: 45%; */
     width: 100%;
     display: flex;
     justify-content: center;
@@ -289,6 +288,7 @@ a:link, a:visited{
 
     .weather-icon{
         flex-direction: column;
+        width: 100%;
     }
 
     .details{
@@ -308,14 +308,11 @@ a:link, a:visited{
     }
 
     .city{
+        font-size: 3rem;
         margin-top: 0;
     }
 
     .weather{
         margin-top: 1rem;
     }
-}
-
-.test{
-    background-image: linear-gradient(to bottom right, pink, lightblue);
 }
