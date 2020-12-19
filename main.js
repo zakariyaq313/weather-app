@@ -1,4 +1,3 @@
-// Date and week day 
 (function () {
     'use strict';
     let date = new Date();
@@ -19,49 +18,47 @@ let userInput = document.getElementById("search"),
     button = document.querySelectorAll("i.icon")[0],
     erase = document.querySelectorAll("i.icon")[1];
 
-// Prevent page reload on form submit 
+// Prevent page reload on form submit
 document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault();
 })
 
-// Funtion for filling data in div card
 function setWeather(data, count) {
-
-    // Current time of any location is UTC time + the location's time zone offset
     let currentHour = new Date().getUTCHours() + Math.round(data.timezone / 3600),
-
         card = document.querySelectorAll("div.card")[count],
         image = card.children[0].children[0],
         celsius = `${Math.round(parseFloat(data.main.temp) - 273.15)}°C`,
-
-        // Difference of time in minutes between UTC and given location's time
-        minutesDifference = new Date().getUTCMinutes() + (data.timezone / 60),
-
-        // We need minutes from 0 to 59, if total minutes >= 60, we remove every 60 minutes
-        // (because they make up an hour) and save the remainder
-        minutesEstimate = minutesDifference % 60,
-
+        currentMinutes = new Date().getUTCMinutes() + (data.timezone / 60),
+        minutesEstimate = currentMinutes % 60,
         minutes,
-        hour = new Date().getUTCHours() + Math.round(data.timezone / 3600);
+        hour;
 
         if (minutesEstimate < 0) {
-            // For locations whose time is behind UTC, their minutesEstimate will be in negative
-            // Changing their sign won't do much, instead it will make minutes move from 59 to 0
-            // Instead of changing sign, we can add negative minutes with 60, that gives the correct time
             minutes = 60 + minutesEstimate;
         } else {
             minutes = minutesEstimate;
         }
 
+        if (minutes >= 30) {
+            hour = new Date().getUTCHours() + Math.floor(data.timezone / 3600);
+        } else {
+            hour = new Date().getUTCHours() + Math.round(data.timezone / 3600);
+        }
+
         const time = () => {
             let amOrPm = "AM";
+
             if ((hour >= 12) && (hour < 24)){
                 amOrPm = "PM";
                 hour = hour - 12;
                 if (hour === 0) {
                     hour = 12;
                 }
-            }            
+            } else if (hour > 24) {
+                hour = hour - 24;
+            } else {
+                hour = 12;
+            }
 
             if (minutes < 10) {
                 minutes = '0' + minutes; 
@@ -74,43 +71,51 @@ function setWeather(data, count) {
             return `${hour}:${minutes} ${amOrPm}`;
         }
 
-    // Content of div that will be created
     card.children[0].children[1].textContent = data.weather[0].main;
     card.children[1].children[0].textContent = time();
     card.children[1].children[1].children[1].textContent = data.name;
     card.children[1].children[1].children[0].textContent = celsius;
 
-    // Weather icon and div card background to be determined based on various conditions
     switch (data.weather[0].main) {
         
         case "Smoke":
-            if (data.weather[0].main === "Smoke") {
-                image.src = "images/global-warming.svg";
-            } else {
-                image.src = "images/fog.svg";   
-            }
-            card.style.backgroundImage = "linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%)";
+            image.src = "images/global-warming.svg";
+            card.style.backgroundImage = "linear-gradient(to bottom right, #ffc371, #ff5f6d)";
             break;
         
         case "Dust":
+            if ((currentHour >= 7) && (currentHour < 18)) {
+                image.src = "images/fog.svg";
+                card.style.backgroundImage = "linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%)";
+            } else {
+                image.src = "images/fog-alt.svg";
+                card.style.backgroundImage = "linear-gradient(to bottom right, #ffc371, #ff5f6d)";
+            }
+            break;
+
         case "Haze":
         case "Mist":
         case "Fog":
-            if ((currentHour >= 7) && (currentHour <= 19)) {
+            if ((currentHour >= 7) && (currentHour < 18)) {
                 image.src = "images/fog.svg";
             } else {
                 image.src = "images/fog-alt.svg";
             }
-            card.style.backgroundImage = "linear-gradient(to bottom right, #355c7d, #6c5b7b, #c06c84)";
+            card.style.backgroundImage = "linear-gradient(to bottom right, #f3904f, #3b4371)";
             break;
 
         case "Clouds":
-            if ((currentHour >= 7) && (currentHour <= 19)) {
-                image.src = "images/cloudy.svg";
-            } else {
-                image.src = "images/cloudy-alt.svg";
-            }
-            card.style.backgroundImage = "linear-gradient(to bottom right, #3494e6, #ec6ead)";
+                if ((currentHour >= 7) && (currentHour < 18)) {
+                    if ((Math.round(parseFloat(data.main.temp) - 273.15)) <= 0) {
+                        card.style.backgroundImage = "linear-gradient(to bottom right, #0093E9 0%, #80D0C7 100%)";
+                    } else {
+                        card.style.backgroundImage = "linear-gradient(to top right, #3494e6, #ec6ead)"; 
+                    }
+                    image.src = "images/cloudy.svg";
+                } else {
+                    image.src = "images/cloudy-alt.svg";
+                    card.style.backgroundImage = "linear-gradient(to bottom right, #b06ab3, #4568dc)";
+                }            
             break;
 
         case "Snow":
@@ -124,9 +129,7 @@ function setWeather(data, count) {
             break;
 
         case "Clear":
-            // card.style.backgroundImage = "linear-gradient(to bottom right, #00b09b, #96c93d)";
-            card.style.backgroundImage = "linear-gradient( to bottom right,  rgba(255,219,47,.95) 11.2%, rgba(244,253,0,.95) 100.2% )";
-
+            card.style.backgroundImage = "radial-gradient( circle farthest-corner at 10% 20%, rgba(255,200,124,1) 0%, rgba(252,251,121,1) 90% )";
             if ((currentHour >= 7) && (currentHour < 18)) {
                 if ((Math.round(parseFloat(data.main.temp) - 273.15)) <= 0 ) {
                     image.src = "images/snowflake.svg";
@@ -135,7 +138,8 @@ function setWeather(data, count) {
                     image.src = "images/heatwave.svg";
                 } else {
                     image.src = "images/sunny.svg";
-                }
+                }   
+            
             } else {
                 if ((Math.round(parseFloat(data.main.temp) - 273.15)) <= 0 ) {
                     image.src = "images/snowflake.svg";
@@ -149,7 +153,7 @@ function setWeather(data, count) {
         case "Rain":
         case "Drizzle":
             image.src = "images/rainy.svg";
-            card.style.backgroundImage = "linear-gradient(to bottom right, #00c6ff, #0072ff)";
+            card.style.backgroundImage = "linear-gradient(to bottom right, #a6ffcb, #12d8fa, #1fa2ff )";
             break;
         
         default:
@@ -159,28 +163,29 @@ function setWeather(data, count) {
     }
 }
 
-// If there's an error in API request
 function handleError(){
     document.querySelector("div.cards").style.display = "none";
     document.querySelector("div.not-found").style.display = "flex";
 }
 
-// After the said error is resolved
 function errorSolved(){
     document.querySelector("div.cards").style.display = "grid";
     document.querySelector("div.not-found").style.display = "none";
 }
 
-// Get weather from API
 function getWeather(count, cityName) {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=b0c90ee33b0ac413a9614d297708aa07`) 
-    .then( (response) => { 
-        return response.json();
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=b0c90ee33b0ac413a9614d297708aa07`)
+
+    .then( (response) => {
+        if (response.ok) {
+            return response.json();
+        }
+        return Promise.reject(response);
     })
-    
+
     .then( (data) => {
-      setWeather(data, count);
-    })
+        setWeather(data, count);
+      })
 
     .catch( () => {
       handleError();
@@ -194,7 +199,6 @@ function removeCards() {
     }
 }
 
-// Function for creating a new card
 function addCard(index, cityName) {
     let newCard = document.createElement("div");
         newCard.classList.add("card");
@@ -213,42 +217,40 @@ function addCard(index, cityName) {
     getWeather(index, cityName);
 }
 
-// For creating based on user input
 function newCity() {
     addCard(0, userInput.value);
 }
 
-// Default displayed cities
 let defaultCities = () => {
     addCard(0, "Delhi");
     addCard(1, "London");
-    addCard(2, "Moscow");
-    addCard(3, "Tokyo");
+    addCard(2, "California");
+    addCard(3, "Moscow");
 }
 
 defaultCities();
 
 function mainHandler(){
-    if (userInput.value.trim() === "") {
-        //do nothing
-    } else {
-        removeCards();
+    removeCards();
         newCity();   
         if (document.querySelector("div.not-found").style.display = "flex") {
             errorSolved();
         }
-    }
-    
+
     document.querySelector("div.cards").style.gridTemplateColumns = "1fr";
 }
 
 button.addEventListener("click", () => {
-    mainHandler();
+    if (userInput.value.trim() !== "") {
+        mainHandler();
+    }
 })
 
 userInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-        mainHandler();
+        if (userInput.value.trim() !== "") {
+            mainHandler();
+        }
     }
 })
 
