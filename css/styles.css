@@ -139,7 +139,7 @@ main{
 .card{
     width: 28rem;
     height: 42rem;
-    background-image: inherit;
+    background-color: #161a1d;
     box-shadow: 0 2px 8px rgba(0,0,0,.4);
     border-radius: 1rem;
     color: #fff;
@@ -150,6 +150,23 @@ main{
     align-items: center;
     transition: opacity 1s;
 }
+
+.skeleton{
+    animation: glow 2.4s linear infinite;
+}
+
+@keyframes glow {
+    0% {
+      background-color: #161a1d;
+    }
+    50% {
+      background-color: #212529;
+    }
+    100% {
+      background-color: #161a1d;
+    }
+  }
+  
 
 .weather-icon{
    display: flex;

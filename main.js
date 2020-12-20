@@ -13,6 +13,14 @@
     document.querySelector("h2.month").textContent = `${day} ${month}`;
 }());
 
+let skeleton = () => {
+    let cards = document.querySelectorAll("div.card");
+    for (let i = 0; i < cards.length; i++) {
+        cards[i].classList.remove("skeleton");
+    }
+}
+
+window.onload = skeleton;
 
 let userInput = document.getElementById("search"),
     button = document.querySelectorAll("i.icon")[0],
@@ -201,7 +209,7 @@ function removeCards() {
 
 function addCard(index, cityName) {
     let newCard = document.createElement("div");
-        newCard.classList.add("card");
+        newCard.classList.add("card", "skeleton");
         document.querySelector("div.cards").appendChild(newCard);
         newCard.innerHTML = `<span class="weather-icon">
                                 <img src="" alt="" class="image">
