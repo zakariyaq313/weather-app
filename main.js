@@ -232,7 +232,7 @@ function newCity() {
 let defaultCities = () => {
     addCard(0, "Delhi");
     addCard(1, "London");
-    addCard(2, "California");
+    addCard(2, "Tokyo");
     addCard(3, "Moscow");
 }
 
