@@ -117,7 +117,7 @@ function setWeather(data, count) {
                     if ((Math.round(parseFloat(data.main.temp) - 273.15)) <= 0) {
                         card.style.backgroundImage = "linear-gradient(to bottom right, #0093E9 0%, #80D0C7 100%)";
                     } else {
-                        card.style.backgroundImage = "linear-gradient(to top right, #3494e6, #ec6ead)"; 
+                        card.style.backgroundImage = "linear-gradient(to bottom right, #00b09b, #96c93d)";
                     }
                     image.src = "images/cloudy.svg";
                 } else {
