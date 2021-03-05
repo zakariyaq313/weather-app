@@ -13,14 +13,14 @@
     document.querySelector("h2.month").textContent = `${day} ${month}`;
 }());
 
-let skeleton = () => {
+let skeletonRemove = () => {
     let cards = document.querySelectorAll("div.card");
     for (let i = 0; i < cards.length; i++) {
         cards[i].classList.remove("skeleton");
     }
 }
 
-window.onload = skeleton;
+window.onload = skeletonRemove;
 
 let userInput = document.getElementById("search"),
     button = document.querySelectorAll("i.icon")[0],
@@ -79,94 +79,61 @@ function setWeather(data, count) {
             return `${hour}:${minutes} ${amOrPm}`;
         }
 
-    card.children[0].children[1].textContent = data.weather[0].main;
-    card.children[1].children[0].textContent = time();
-    card.children[1].children[1].children[1].textContent = data.name;
-    card.children[1].children[1].children[0].textContent = celsius;
+    card.children[1].children[1].textContent = data.weather[0].main;
+    card.children[2].textContent = time();
+    card.children[0].textContent = data.name;
+    card.children[1].children[0].textContent = celsius;
 
     switch (data.weather[0].main) {
         
         case "Smoke":
-            image.src = "images/global-warming.svg";
-            card.style.backgroundImage = "linear-gradient(to bottom right, #ffc371, #ff5f6d)";
+            card.style.backgroundImage = 'url("images/smoke.jpg")';
             break;
         
         case "Dust":
-            if ((currentHour >= 7) && (currentHour < 18)) {
-                image.src = "images/fog.svg";
-                card.style.backgroundImage = "linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%)";
-            } else {
-                image.src = "images/fog-alt.svg";
-                card.style.backgroundImage = "linear-gradient(to bottom right, #ffc371, #ff5f6d)";
-            }
+            card.style.backgroundImage = 'url("images/sand.jpg")';
             break;
 
         case "Haze":
         case "Mist":
         case "Fog":
-            if ((currentHour >= 7) && (currentHour < 18)) {
-                image.src = "images/fog.svg";
-            } else {
-                image.src = "images/fog-alt.svg";
-            }
-            card.style.backgroundImage = "linear-gradient(to bottom right, #f3904f, #3b4371)";
+            card.style.backgroundImage = 'url("images/fog.jpg")';
             break;
 
         case "Clouds":
-                if ((currentHour >= 7) && (currentHour < 18)) {
-                    if ((Math.round(parseFloat(data.main.temp) - 273.15)) <= 0) {
-                        card.style.backgroundImage = "linear-gradient(to bottom right, #0093E9 0%, #80D0C7 100%)";
-                    } else {
-                        card.style.backgroundImage = "linear-gradient(to bottom right, #00b09b, #96c93d)";
-                    }
-                    image.src = "images/cloudy.svg";
-                } else {
-                    image.src = "images/cloudy-alt.svg";
-                    card.style.backgroundImage = "linear-gradient(to bottom right, #b06ab3, #4568dc)";
-                }            
+            card.style.backgroundImage = 'url("images/clouds.jpg")';            
             break;
 
         case "Snow":
-            image.src = "images/snow.svg";
-            card.style.backgroundImage = "linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)";
+            card.style.backgroundImage = 'url("images/snow.png")';
             break;
 
         case "Thunderstorm":
-            image.src = "images/storm.svg";
-            card.style.backgroundImage = "linear-gradient( 109.6deg,  rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% )";
+            card.style.backgroundImage = 'url("images/storm.jpg")';
             break;
 
         case "Clear":
-            card.style.backgroundImage = "radial-gradient( circle farthest-corner at 10% 20%, rgba(255,200,124,1) 0%, rgba(252,251,121,1) 90% )";
-            if ((currentHour >= 7) && (currentHour < 18)) {
-                if ((Math.round(parseFloat(data.main.temp) - 273.15)) <= 0 ) {
-                    image.src = "images/snowflake.svg";
-                    card.style.backgroundImage = "linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)";
-                } else if ((Math.round(parseFloat(data.main.temp) - 273.15)) >= 30) {
-                    image.src = "images/heatwave.svg";
-                } else {
-                    image.src = "images/sunny.svg";
-                }   
-            
+            if (celsius <= 0) {
+                card.style.backgroundImage = 'url("images/snow.jpg")';
             } else {
-                if ((Math.round(parseFloat(data.main.temp) - 273.15)) <= 0 ) {
-                    image.src = "images/snowflake.svg";
+                if ((currentHour >= 7) && (currentHour < 18)) {
+                    card.style.backgroundImage = 'url("images/clear.jpg")';
                 } else {
-                    image.src = "images/moon.svg";
+                    card.style.backgroundImage = 'url("images/night.jpg")';
                 }
-                card.style.backgroundImage = "linear-gradient(to bottom right, #485563, #29323c)";
             }
             break;
         
         case "Rain":
+            card.style.backgroundImage = 'url("images/rain.jpg")';
+            break;
+
         case "Drizzle":
-            image.src = "images/rainy.svg";
-            card.style.backgroundImage = "linear-gradient(to bottom right, #a6ffcb, #12d8fa, #1fa2ff )";
+            card.style.backgroundImage = 'url("images/drizzle.jpg")';
             break;
         
         default:
-            image.src = "images/wind.svg";
-            card.style.backgroundImage = "radial-gradient( circle farthest-corner at 10% 20%,  rgba(253,101,133,1) 0%, rgba(255,211,165,1) 90% )";
+            card.style.backgroundImage = 'url("images/clear.jpg")';
             break;
     }
 }
@@ -193,6 +160,7 @@ function getWeather(count, cityName) {
 
     .then( (data) => {
         setWeather(data, count);
+        console.log(data);
       })
 
     .catch( () => {
@@ -211,17 +179,12 @@ function addCard(index, cityName) {
     let newCard = document.createElement("div");
         newCard.classList.add("card", "skeleton");
         document.querySelector("div.cards").appendChild(newCard);
-        newCard.innerHTML = `<span class="weather-icon">
-                                <img src="" alt="" class="image">
-                                <p class="weather"></p>
-                            </span>
-                            <span class="details">
-                                <p class="time"></p>
-                                <span class="main-content">
-                                    <h2 class="temp"></h2>
-                                    <h1 class="city"></h1>
-                                </span>
-                            </span>`;
+        newCard.innerHTML = `<p class="city"></p>
+                            <div class="main-content">
+                                <h1 class="temp"></h2>
+                                <h2 class="weather"></h1>
+                            </div>
+                            <p class="time"></p>`;
     getWeather(index, cityName);
 }
 

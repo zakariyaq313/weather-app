@@ -14,7 +14,6 @@ body{
     font-family: 'Lato', sans-serif;
     background-color: var(--dark);
     position: relative;
-    padding-bottom: 5rem;
 }
 
 .date-heading{
@@ -59,7 +58,6 @@ body{
     font-size: 2rem;
     font-weight: 400;
 }
-
 
 main{
     display: flex;
@@ -117,7 +115,7 @@ main{
 }
 
 .icon:first-of-type{
-    left: 0rem;
+    left: 0;
 }
 
 .icon:last-of-type{
@@ -129,7 +127,7 @@ main{
 }
 
 .cards{
-    margin-top: 6rem;
+    margin-top: 3rem;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     place-items: center;
@@ -138,14 +136,17 @@ main{
 
 .card{
     width: 28rem;
-    height: 42rem;
+    height: 50rem;
     background-color: inherit;
-    box-shadow: 0 2px 8px rgba(0,0,0,.4);
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,.4);
     border-radius: 1rem;
     color: #fff;
     padding: 5rem 3rem;
+    text-align: center;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     transition: opacity 1s;
@@ -166,50 +167,26 @@ main{
       background-color: rgb(13, 17, 23);
     }
 }
-  
 
-.weather-icon{
-   display: flex;
-   flex-direction: row;
-   align-items: center;
-   justify-content: space-around;
-   width: 80%;
-}
-
-.details{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.main-content{
-    margin: 0 auto;
-}
-
-
-.time{
-    font-size: 1.4rem;
+.city{
+    font-size: 2.2rem;
 }
 
 .temp{
-    font-size: 2rem;
-    margin-top: 9rem;
-}
-
-.city{
-    font-size: 3.5rem;
-    margin-top: 1rem;
-    font-weight: 300;
-}
-
-.image{
-    width: 8rem;
+    font-family: 'Fredoka One', cursive;
+    font-size: 5rem;
+    font-weight: 400;
 }
 
 .weather{
-    font-size: 2.2rem;
+    font-size: 3rem;
+    font-weight: 400;
 }
+
+.time{
+    font-size: 1.5rem;
+}
+
 .not-found{
     margin: 10rem 0;
     display: none;
@@ -228,21 +205,36 @@ main{
     margin-top: 2rem;
 }
 
-.copyright{
-    font-family: 'Ubuntu', sans-serif;
+footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
     color: #fff;
-    font-weight: 200;
+    font-weight: 400;
     font-size: 1.2rem;
-    position: absolute;
-    bottom: 2rem;
-    right: 2rem;
+    line-height: 1.5;
 }
 
 a:link, a:visited{
     color: #fff;
+    text-decoration: none;
+    padding: 1px;
+    border-bottom: 1px solid #fff;
+    background-image: linear-gradient(to right, #fff, #fff);
+    background-size: 0 0;
+    background-position: 0 100%;
+    background-repeat: repeat-x;
+    transition: all .4s;
 }
 
-.copyright p:last-of-type{
+a:hover{
+    color: var(--dark);
+    background-size: 100% 100%;
+}
+
+footer p:last-of-type{
     margin-top: .4rem;
 }
 
