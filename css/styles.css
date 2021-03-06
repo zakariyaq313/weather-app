@@ -63,10 +63,12 @@ main{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
     padding: 2rem 3rem;
+    min-height: 100vh;
 }
 
-.container{
+.navigation{
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
     justify-content: start;
@@ -99,12 +101,12 @@ main{
 }
 
 #search::placeholder{
-    color: rgba(128, 128, 128, 1);
+    color: #808080;
 }
 
 .icon{
-    color: rgba(128, 128, 128, 1);
-    font-size: 2.4rem;
+    fill: #808080;
+    height: 4rem;
     border-radius: 10rem;
     cursor: pointer;
     padding: 1rem;
@@ -214,7 +216,10 @@ footer{
     color: #fff;
     font-weight: 400;
     font-size: 1.2rem;
-    line-height: 1.5;
+    line-height: 1.8;
+    width: 40%;
+    margin: 0 auto;
+    text-align: center;
 }
 
 a:link, a:visited{
@@ -232,10 +237,6 @@ a:link, a:visited{
 a:hover{
     color: var(--dark);
     background-size: 100% 100%;
-}
-
-footer p:last-of-type{
-    margin-top: .4rem;
 }
 
 @media(min-width: 1600px) {
@@ -300,10 +301,6 @@ footer p:last-of-type{
 
     .details{
         width: 50%;
-    }
-
-    .main-content{
-        margin-bottom: 3rem;
     }
 
     .time{

@@ -1,16 +1,13 @@
 (function () {
     'use strict';
     let date = new Date();
-    let dayString = date.toLocaleDateString("default", {
-        weekday: "long"
-    });
-    let day = date.getDate();
-    let month = date.toLocaleDateString("default", {
-        month: "long"
-    });
+    let weekDay = date.toLocaleDateString("default", {weekday: "long"});
+    let day = date.getDate(); 
+    let month = date.toLocaleDateString("default", {month: "long"});
+    let year = date.getFullYear();
 
-    document.querySelector("h1.day").textContent = dayString;
-    document.querySelector("h2.month").textContent = `${day} ${month}`;
+    document.querySelector("h1.day").textContent = weekDay;
+    document.querySelector("h2.date").textContent = `${day} ${month}, ${year}`;
 }());
 
 let skeletonRemove = () => {
@@ -23,8 +20,8 @@ let skeletonRemove = () => {
 window.onload = skeletonRemove;
 
 let userInput = document.getElementById("search"),
-    button = document.querySelectorAll("i.icon")[0],
-    erase = document.querySelectorAll("i.icon")[1];
+    search = document.querySelectorAll("svg.icon")[0],
+    erase = document.querySelectorAll("svg.icon")[1];
 
 // Prevent page reload on form submit
 document.querySelector("form").addEventListener("submit", (e) => {
@@ -34,7 +31,6 @@ document.querySelector("form").addEventListener("submit", (e) => {
 function setWeather(data, count) {
     let currentHour = new Date().getUTCHours() + Math.round(data.timezone / 3600),
         card = document.querySelectorAll("div.card")[count],
-        image = card.children[0].children[0],
         celsius = `${Math.round(parseFloat(data.main.temp) - 273.15)}°C`,
         currentMinutes = new Date().getUTCMinutes() + (data.timezone / 60),
         minutesEstimate = currentMinutes % 60,
@@ -78,64 +74,91 @@ function setWeather(data, count) {
 
             return `${hour}:${minutes} ${amOrPm}`;
         }
-
+    
     card.children[1].children[1].textContent = data.weather[0].main;
     card.children[2].textContent = time();
     card.children[0].textContent = data.name;
     card.children[1].children[0].textContent = celsius;
+    
+    // Background image of weather card
+    let background;
 
     switch (data.weather[0].main) {
-        
-        case "Smoke":
-            card.style.backgroundImage = 'url("images/smoke.jpg")';
-            break;
-        
-        case "Dust":
-            card.style.backgroundImage = 'url("images/sand.jpg")';
-            break;
 
-        case "Haze":
-        case "Mist":
-        case "Fog":
-            card.style.backgroundImage = 'url("images/fog.jpg")';
-            break;
-
-        case "Clouds":
-            card.style.backgroundImage = 'url("images/clouds.jpg")';            
-            break;
-
-        case "Snow":
-            card.style.backgroundImage = 'url("images/snow.png")';
-            break;
-
-        case "Thunderstorm":
-            card.style.backgroundImage = 'url("images/storm.jpg")';
-            break;
-
-        case "Clear":
-            if (celsius <= 0) {
-                card.style.backgroundImage = 'url("images/snow.jpg")';
-            } else {
-                if ((currentHour >= 7) && (currentHour < 18)) {
-                    card.style.backgroundImage = 'url("images/clear.jpg")';
-                } else {
-                    card.style.backgroundImage = 'url("images/night.jpg")';
-                }
-            }
-            break;
-        
         case "Rain":
-            card.style.backgroundImage = 'url("images/rain.jpg")';
-            break;
+            background = "rain.jpg";
+        break;
 
         case "Drizzle":
-            card.style.backgroundImage = 'url("images/drizzle.jpg")';
-            break;
+            background = "drizzle.jpg";
+        break;
+    
+        case "Thunderstorm":
+            background = "storm.jpg";
+        break;
         
+        case "Smoke":
+            background = "smoke.jpg";
+        break;
+        
+        case "Dust":
+        case "Haze":
+            background = "dust.jpg";
+        break;
+
+        case "Mist":
+        case "Fog":
+            background = "fog.jpg";
+        break;
+
+        case "Snow":
+            if ((currentHour >= 7) && (currentHour < 18)) {
+                background = "snow.png";                
+            } else {
+                background = "snow-alt.jpg";
+            }
+        break;
+
+        case "Clouds":
+            if ((Math.round(parseFloat(data.main.temp) - 273.15)) <= 0) {
+                background = "snow.png";
+
+            } else {
+                if ((currentHour >= 7) && (currentHour < 18)) {
+                    background = "clouds.jpg";
+                } else {
+                    background = "clouds-alt.jpg";
+                } 
+            }
+        break;
+
+        case "Clear":
+            if ((Math.round(parseFloat(data.main.temp) - 273.15)) <= 0) {
+                background = "snow.png";
+            }
+            
+            else {
+                if ((currentHour >= 7) && (currentHour < 18)) {
+                    if ((Math.round(parseFloat(data.main.temp) - 273.15)) >= 28) {
+                        background = "sunny.png";
+                    } else{
+                        background = "clear.jpg";
+                    }
+                } 
+                
+                else {
+                    background = "night.jpg";
+                }
+            }
+        break;
+
         default:
-            card.style.backgroundImage = 'url("images/clear.jpg")';
-            break;
+            background = "clear.jpg";
+        break;
     }
+
+    // Setting the card background image
+    card.style.backgroundImage = `url("images/${background}")`;
 }
 
 function handleError(){
@@ -155,12 +178,12 @@ function getWeather(count, cityName) {
         if (response.ok) {
             return response.json();
         }
+
         return Promise.reject(response);
     })
 
     .then( (data) => {
         setWeather(data, count);
-        console.log(data);
       })
 
     .catch( () => {
@@ -176,15 +199,29 @@ function removeCards() {
 }
 
 function addCard(index, cityName) {
+    // Create elements
     let newCard = document.createElement("div");
-        newCard.classList.add("card", "skeleton");
-        document.querySelector("div.cards").appendChild(newCard);
-        newCard.innerHTML = `<p class="city"></p>
-                            <div class="main-content">
-                                <h1 class="temp"></h2>
-                                <h2 class="weather"></h1>
-                            </div>
-                            <p class="time"></p>`;
+    let city = document.createElement("p");
+    let container = document.createElement("div");
+    let temperature = document.createElement("h1");
+    let weather = document.createElement("h2");
+    let time = document.createElement("p");
+
+    // Add classes
+    newCard.classList.add("card", "skeleton");
+    city.className = "city";
+    temperature.className = "temp";
+    weather.className = "weather";
+    time.className = "time";
+
+    // Append/arrange elements in DOM
+    document.querySelector("div.cards").appendChild(newCard);
+    newCard.appendChild(city);
+    newCard.appendChild(container);
+    newCard.appendChild(time);
+    container.appendChild(temperature);
+    container.appendChild(weather);
+
     getWeather(index, cityName);
 }
 
@@ -195,8 +232,8 @@ function newCity() {
 let defaultCities = () => {
     addCard(0, "Delhi");
     addCard(1, "London");
-    addCard(2, "Tokyo");
-    addCard(3, "Moscow");
+    addCard(2, "Moscow");
+    addCard(3, "Tokyo");
 }
 
 defaultCities();
@@ -211,7 +248,7 @@ function mainHandler(){
     document.querySelector("div.cards").style.gridTemplateColumns = "1fr";
 }
 
-button.addEventListener("click", () => {
+search.addEventListener("click", () => {
     if (userInput.value.trim() !== "") {
         mainHandler();
     }
