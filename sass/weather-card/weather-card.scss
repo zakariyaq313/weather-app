@@ -1,0 +1,86 @@
+.card {
+    width: 28rem;
+    height: 50rem;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .4);
+    border-radius: 1rem;
+    color: #fff;
+    padding: 5rem 3rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.city, .time{
+    position: relative;
+}
+
+.city {
+    font-size: 2.2rem;
+}
+
+.temp {
+    font-family: 'Fredoka One', cursive;
+    font-size: 5rem;
+    font-weight: 400;
+}
+
+.weather {
+    font-size: 3rem;
+    font-weight: 400;
+}
+
+.time {
+    font-size: 1.5rem;
+}
+
+.skeleton-background::before,
+.skeleton-text::before,
+.skeleton-text::after {
+    content: "";
+    position: absolute;
+    z-index: 5;
+}
+
+.skeleton-background::before{
+    height: 100%;
+    width: 100%;
+    background-color: #1f1f22;
+    border-radius: 1rem;
+    top: 0;
+    left: 0;
+    transition: all 2s;
+}
+
+.skeleton-text::before,
+.skeleton-text::after{
+    height: .8rem;
+    width: 20rem;
+    right: 50%;
+    transform: translateX(50%);
+    border-radius: 10rem;
+    animation-fill-mode: forwards;
+    background: #50535a;
+    background-image: linear-gradient(to right, #50535a 0%, #656871 20%, #50535a 40%, #50535a 100%);
+    background-repeat: no-repeat;
+    background-size: 800px 104px;
+    animation: shimmer 1s infinite linear;
+}
+
+.skeleton-text::before{
+    bottom: 50%;
+}
+
+.skeleton-text::after{
+    top: 50%;
+    margin-top: 1.5rem;
+}
+
+.slide-down::before{
+    transform: translateY(50rem);
+    opacity: 0;
+}

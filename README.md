@@ -1,6 +1,6 @@
 # **Weather App**
 
-A simple and elegant Weather App made with vanilla JS
+A simple and elegant Weather App made with HTML, CSS/SCSS, JS
 
 <br>
 

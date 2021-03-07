@@ -1,0 +1,29 @@
+// Gradient text
+@keyframes gradient-shift {
+    0% {
+        background-position: 58% 50%;
+    }
+
+    25% {
+        background-position: 100% 0%;
+    }
+
+    75% {
+        background-position: 10% 50%;
+    }
+
+    100% {
+        background-position: 58% 50%;
+    }
+}
+
+// Skeleton screen
+@keyframes shimmer {
+    0% {
+        background-position: -468px 0;
+    }
+
+    100% {
+        background-position: 468px 0;
+    }
+}

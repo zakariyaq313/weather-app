@@ -1,3 +1,4 @@
+// Get date
 (function () {
     'use strict';
     let date = new Date();
@@ -10,32 +11,20 @@
     document.querySelector("h2.date").textContent = `${day} ${month}, ${year}`;
 }());
 
-let skeletonRemove = () => {
-    let cards = document.querySelectorAll("div.card");
-    for (let i = 0; i < cards.length; i++) {
-        cards[i].classList.remove("skeleton");
-    }
-}
-
-window.onload = skeletonRemove;
-
-let userInput = document.getElementById("search"),
-    search = document.querySelectorAll("svg.icon")[0],
-    erase = document.querySelectorAll("svg.icon")[1];
-
 // Prevent page reload on form submit
 document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault();
 })
 
-function setWeather(data, count) {
-    let currentHour = new Date().getUTCHours() + Math.round(data.timezone / 3600),
-        card = document.querySelectorAll("div.card")[count],
-        celsius = `${Math.round(parseFloat(data.main.temp) - 273.15)}°C`,
-        currentMinutes = new Date().getUTCMinutes() + (data.timezone / 60),
-        minutesEstimate = currentMinutes % 60,
-        minutes,
-        hour;
+// Data to be filled in weather card
+function setWeather(data, index) {
+    let currentHour = new Date().getUTCHours() + Math.round(data.timezone / 3600);
+    let card = document.querySelectorAll("div.card")[index];
+    let celsius = `${Math.round(parseFloat(data.main.temp) - 273.15)}°C`;
+    let currentMinutes = new Date().getUTCMinutes() + (data.timezone / 60);
+    let minutesEstimate = currentMinutes % 60;
+    let minutes;
+    let hour;
 
         if (minutesEstimate < 0) {
             minutes = 60 + minutesEstimate;
@@ -58,10 +47,14 @@ function setWeather(data, count) {
                 if (hour === 0) {
                     hour = 12;
                 }
-            } else if (hour > 24) {
+            } 
+
+            else if (hour > 24) {
                 hour = hour - 24;
-            } else {
-                hour = 12;
+            } 
+            
+            else {
+                hour = hour - 36;
             }
 
             if (minutes < 10) {
@@ -74,11 +67,6 @@ function setWeather(data, count) {
 
             return `${hour}:${minutes} ${amOrPm}`;
         }
-    
-    card.children[1].children[1].textContent = data.weather[0].main;
-    card.children[2].textContent = time();
-    card.children[0].textContent = data.name;
-    card.children[1].children[0].textContent = celsius;
     
     // Background image of weather card
     let background;
@@ -157,21 +145,18 @@ function setWeather(data, count) {
         break;
     }
 
-    // Setting the card background image
+    // Filling appropriate data
     card.style.backgroundImage = `url("images/${background}")`;
+    card.children[1].children[1].textContent = data.weather[0].main;
+    card.children[2].textContent = time();
+    card.children[0].textContent = data.name;
+    card.children[1].children[0].textContent = celsius;
 }
 
-function handleError(){
-    document.querySelector("div.cards").style.display = "none";
-    document.querySelector("div.not-found").style.display = "flex";
-}
+let cardsContainer = document.querySelector("div.cards");
+let errorMessage = document.querySelector("div.not-found");
 
-function errorSolved(){
-    document.querySelector("div.cards").style.display = "grid";
-    document.querySelector("div.not-found").style.display = "none";
-}
-
-function getWeather(count, cityName) {
+function getWeather(index, cityName) {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=b0c90ee33b0ac413a9614d297708aa07`)
 
     .then( (response) => {
@@ -183,22 +168,16 @@ function getWeather(count, cityName) {
     })
 
     .then( (data) => {
-        setWeather(data, count);
-      })
+        setWeather(data, index);
+    })
 
     .catch( () => {
-      handleError();
+        cardsContainer.style.display = "none";
+        errorMessage.style.display = "flex";
     });
 }
 
-function removeCards() {
-    let cards = document.querySelectorAll("div.card");
-    for (let i = 0; i < cards.length; i++) {
-        cards[i].remove();
-    }
-}
-
-function addCard(index, cityName) {
+function createCard(index, cityName) {
     // Create elements
     let newCard = document.createElement("div");
     let city = document.createElement("p");
@@ -208,11 +187,12 @@ function addCard(index, cityName) {
     let time = document.createElement("p");
 
     // Add classes
-    newCard.classList.add("card", "skeleton");
-    city.className = "city";
+    newCard.classList.add("card", "skeleton-background");
+    city.classList.add("city", "skeleton-text");
+    container.className = "skeleton-text";
     temperature.className = "temp";
     weather.className = "weather";
-    time.className = "time";
+    time.classList.add("time", "skeleton-text");
 
     // Append/arrange elements in DOM
     document.querySelector("div.cards").appendChild(newCard);
@@ -223,42 +203,63 @@ function addCard(index, cityName) {
     container.appendChild(weather);
 
     getWeather(index, cityName);
+
+    newCard.onload = setTimeout(() => {
+        city.classList.remove("skeleton-text");
+        container.classList.remove("skeleton-text");
+        time.classList.remove("skeleton-text");
+        newCard.classList.add("slide-down");
+
+        setTimeout(() => {
+            newCard.classList.remove("skeleton-background");
+        }, 2000);
+    }, 3000);
+}
+
+// Default cities
+createCard(0, "Delhi");
+createCard(1, "London");
+createCard(2, "Moscow");
+createCard(3, "Tokyo");
+
+function removeCards() {
+    let cards = document.querySelectorAll("div.card");
+    for (let i = 0; i < cards.length; i++) {
+        cards[i].remove();
+    }
 }
 
 function newCity() {
-    addCard(0, userInput.value);
+    createCard(0, userInput.value);
 }
 
-let defaultCities = () => {
-    addCard(0, "Delhi");
-    addCard(1, "London");
-    addCard(2, "Moscow");
-    addCard(3, "Tokyo");
-}
-
-defaultCities();
-
-function mainHandler(){
+function mainHandler() {
     removeCards();
-        newCity();   
-        if (document.querySelector("div.not-found").style.display = "flex") {
-            errorSolved();
+        newCity();
+
+        if (errorMessage.style.display = "flex") {
+            cardsContainer.style.display = "grid";
+            errorMessage.style.display = "none";
         }
 
-    document.querySelector("div.cards").style.gridTemplateColumns = "1fr";
+    cardsContainer.style.gridTemplateColumns = "1fr";
 }
 
-search.addEventListener("click", () => {
-    if (userInput.value.trim() !== "") {
-        mainHandler();
-    }
-})
+let userInput = document.querySelector("input.search");
+let search = document.querySelectorAll("svg.icon")[0];
+let erase = document.querySelectorAll("svg.icon")[1];
 
 userInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         if (userInput.value.trim() !== "") {
             mainHandler();
         }
+    }
+})
+
+search.addEventListener("click", () => {
+    if (userInput.value.trim() !== "") {
+        mainHandler();
     }
 })
 

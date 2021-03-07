@@ -1,0 +1,48 @@
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    color: #fff;
+    font-weight: 400;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    width: 40%;
+    margin: 0 auto;
+    text-align: center;
+
+    @include respond(900px){
+        width: 60%;
+    }
+
+    @include respond(600px){
+        width: 80%;
+    }
+
+    @include respond(400px){
+        width: 90%;
+    }
+
+    p{
+        line-height: 2;
+    }
+}
+
+a:link,
+a:visited {
+    color: #fff;
+    text-decoration: none;
+    padding: 1px;
+    border-bottom: 1px solid #fff;
+    background-image: linear-gradient(to right, #fff, #fff);
+    background-size: 0 0;
+    background-position: 0 100%;
+    background-repeat: repeat-x;
+    transition: all .4s;
+}
+
+a:hover {
+    color: var(--dark);
+    background-size: 100% 100%;
+}
