@@ -20,55 +20,52 @@ document.querySelector("form").addEventListener("submit", (e) => {
 function setWeather(data, index) {
     let currentHour = new Date().getUTCHours() + Math.round(data.timezone / 3600);
     let card = document.querySelectorAll("div.card")[index];
-    let celsius = `${Math.round(parseFloat(data.main.temp) - 273.15)}°C`;
+    let celsius = Math.round(parseFloat(data.main.temp) - 273.15);
     let currentMinutes = new Date().getUTCMinutes() + (data.timezone / 60);
     let minutesEstimate = currentMinutes % 60;
     let minutes;
     let hour;
 
-        if (minutesEstimate < 0) {
-            minutes = 60 + minutesEstimate;
-        } else {
-            minutes = minutesEstimate;
+    if (minutesEstimate < 0) {
+        minutes = 60 + minutesEstimate;
+    } else {
+        minutes = minutesEstimate;
+    }
+
+    if (minutes >= 30) {
+        hour = new Date().getUTCHours() + Math.floor(data.timezone / 3600);
+    } else {
+        hour = new Date().getUTCHours() + Math.round(data.timezone / 3600);
+    }
+
+    const time = () => {
+        let amOrPm = "AM";
+
+        if (hour >= 24) {
+            hour = hour - 24;
         }
 
-        if (minutes >= 30) {
-            hour = new Date().getUTCHours() + Math.floor(data.timezone / 3600);
-        } else {
-            hour = new Date().getUTCHours() + Math.round(data.timezone / 3600);
+        if ((hour >= 12) && (hour < 24)){
+            amOrPm = "PM";
+            hour = hour - 12;
         }
 
-        const time = () => {
-            let amOrPm = "AM";
-
-            if ((hour >= 12) && (hour < 24)){
-                amOrPm = "PM";
-                hour = hour - 12;
-                if (hour === 0) {
-                    hour = 12;
-                }
-            } 
-
-            else if (hour > 24) {
-                hour = hour - 24;
-            } 
-            
-            else {
-                hour = hour - 36;
-            }
-
-            if (minutes < 10) {
-                minutes = '0' + minutes; 
-            }
-
-            if (hour < 10) {
-                hour = '0' + hour;
-            }
-
-            return `${hour}:${minutes} ${amOrPm}`;
+        if (hour === 0) {
+            hour = 12;
         }
+
+        if (minutes < 10) {
+            minutes = '0' + minutes; 
+        }
+
+        if (hour < 10) {
+            hour = '0' + hour;
+        }
+
+        return `${hour}:${minutes} ${amOrPm}`;
+    }
     
-    // Background image of weather card
+    // Background image depending on weather condition
     let background;
 
     switch (data.weather[0].main) {
@@ -101,15 +98,15 @@ function setWeather(data, index) {
 
         case "Snow":
             if ((currentHour >= 7) && (currentHour < 18)) {
-                background = "snow.png";                
+                background = "snow.jpg";
             } else {
-                background = "snow-alt.jpg";
+                background = "snow-night.jpg";
             }
         break;
 
         case "Clouds":
-            if ((Math.round(parseFloat(data.main.temp) - 273.15)) <= 0) {
-                background = "snow.png";
+            if (celsius <= 0) {
+                background = "snow-clouds.png";
 
             } else {
                 if ((currentHour >= 7) && (currentHour < 18)) {
@@ -121,23 +118,23 @@ function setWeather(data, index) {
         break;
 
         case "Clear":
-            if ((Math.round(parseFloat(data.main.temp) - 273.15)) <= 0) {
-                background = "snow.png";
-            }
-            
-            else {
                 if ((currentHour >= 7) && (currentHour < 18)) {
-                    if ((Math.round(parseFloat(data.main.temp) - 273.15)) >= 28) {
+                    if (celsius >= 28) {
                         background = "sunny.png";
+                    } else if (celsius <= 0) {
+                        background = "snow.jpg";
                     } else{
                         background = "clear.jpg";
                     }
                 } 
                 
                 else {
-                    background = "night.jpg";
+                    if (celsius <= 0) {
+                        background = "snow-night.jpg"
+                    } else {
+                        background = "night.jpg";                        
+                    }
                 }
-            }
         break;
 
         default:
@@ -145,12 +142,28 @@ function setWeather(data, index) {
         break;
     }
 
+    let imageUrl = `images/${background}`;
+    let preloaderImage = document.createElement("img");
+    preloaderImage.src = imageUrl;
+
     // Filling appropriate data
-    card.style.backgroundImage = `url("images/${background}")`;
+    card.style.backgroundImage = `url(${imageUrl})`;
     card.children[1].children[1].textContent = data.weather[0].main;
     card.children[2].textContent = time();
     card.children[0].textContent = data.name;
-    card.children[1].children[0].textContent = celsius;
+    card.children[1].children[0].textContent = `${celsius}°C`;
+
+    preloaderImage.onload = setTimeout(() => {
+        preloaderImage.remove();
+        card.children[0].classList.remove("skeleton-text");
+        card.children[1].classList.remove("skeleton-text");
+        card.children[2].classList.remove("skeleton-text");
+        card.classList.add("slide-down");
+
+        setTimeout(() => {
+            card.classList.remove("skeleton-background");
+        }, 1000);
+    }, 4000);
 }
 
 let cardsContainer = document.querySelector("div.cards");
@@ -203,17 +216,6 @@ function createCard(index, cityName) {
     container.appendChild(weather);
 
     getWeather(index, cityName);
-
-    newCard.onload = setTimeout(() => {
-        city.classList.remove("skeleton-text");
-        container.classList.remove("skeleton-text");
-        time.classList.remove("skeleton-text");
-        newCard.classList.add("slide-down");
-
-        setTimeout(() => {
-            newCard.classList.remove("skeleton-background");
-        }, 2000);
-    }, 3000);
 }
 
 // Default cities

@@ -105,6 +105,11 @@ body {
   padding: 1.5rem 5rem;
   transition: all 0.3s;
 }
+@media (max-width: 600px) {
+  .search {
+    font-weight: 400;
+  }
+}
 
 .search:focus {
   outline: none;
@@ -181,7 +186,7 @@ main {
 }
 @media (max-width: 600px) {
   .cards {
-    margin-top: 8rem;
+    margin-top: 5rem;
     grid-template-columns: 1fr;
   }
 }
@@ -220,9 +225,18 @@ main {
   align-items: center;
   position: relative;
 }
+@media (max-width: 600px) {
+  .card {
+    width: 30rem;
+  }
+}
 
 .city, .time {
   position: relative;
+}
+
+.temp, .weather {
+  font-weight: 400;
 }
 
 .city {
@@ -232,12 +246,10 @@ main {
 .temp {
   font-family: "Fredoka One", cursive;
   font-size: 5rem;
-  font-weight: 400;
 }
 
 .weather {
   font-size: 3rem;
-  font-weight: 400;
 }
 
 .time {
@@ -259,7 +271,7 @@ main {
   border-radius: 1rem;
   top: 0;
   left: 0;
-  transition: all 2s;
+  transition: all 1s;
 }
 
 .skeleton-text::before,
@@ -323,7 +335,7 @@ footer {
   font-weight: 400;
   font-size: 1.2rem;
   line-height: 1.8;
-  width: 40%;
+  width: 45%;
   margin: 0 auto;
   text-align: center;
 }

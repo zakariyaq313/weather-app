@@ -33,7 +33,7 @@ main {
     }
 
     @include respond(600px){
-        margin-top: 8rem;
+        margin-top: 5rem;
         grid-template-columns: 1fr;
     }
 }
