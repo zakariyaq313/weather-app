@@ -6,6 +6,10 @@ main {
     padding: 2rem 3rem;
     min-height: 100vh;
 
+    @include respond(900px){
+        min-height: unset;
+    }
+
     @include respond(400px){
         padding: 2rem;
     }
@@ -36,6 +40,11 @@ main {
         margin-top: 5rem;
         grid-template-columns: 1fr;
     }
+
+    @include respond(500px){
+        margin-top: 4rem;
+        row-gap: 3rem;
+    }    
 }
 
 .not-found {

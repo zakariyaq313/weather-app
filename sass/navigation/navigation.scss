@@ -10,13 +10,13 @@
         column-gap: 5rem;
     }
 
-    @include respond(800px){
+    @include respond(900px){
         grid-template-columns: 1fr 3fr;
     }
 
-    @include respond(500px){
+    @include respond(700px){
         grid-template-columns: 1fr;
-        row-gap: 4rem;
+        row-gap: 3rem;
     }
 }
 

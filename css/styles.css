@@ -56,15 +56,15 @@ body {
     column-gap: 5rem;
   }
 }
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .navigation {
     grid-template-columns: 1fr 3fr;
   }
 }
-@media (max-width: 500px) {
+@media (max-width: 700px) {
   .navigation {
     grid-template-columns: 1fr;
-    row-gap: 4rem;
+    row-gap: 3rem;
   }
 }
 
@@ -154,6 +154,11 @@ main {
   padding: 2rem 3rem;
   min-height: 100vh;
 }
+@media (max-width: 900px) {
+  main {
+    min-height: unset;
+  }
+}
 @media (max-width: 400px) {
   main {
     padding: 2rem;
@@ -188,6 +193,12 @@ main {
   .cards {
     margin-top: 5rem;
     grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 500px) {
+  .cards {
+    margin-top: 4rem;
+    row-gap: 3rem;
   }
 }
 
@@ -225,9 +236,10 @@ main {
   align-items: center;
   position: relative;
 }
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .card {
-    width: 30rem;
+    width: 32rem;
+    height: 52rem;
   }
 }
 
@@ -287,6 +299,12 @@ main {
   background-repeat: no-repeat;
   background-size: 800px 104px;
   animation: shimmer 1s infinite linear;
+}
+@media (max-width: 700px) {
+  .skeleton-text::before,
+.skeleton-text::after {
+    width: 22rem;
+  }
 }
 
 .skeleton-text::before {
