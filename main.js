@@ -237,9 +237,9 @@ function createCard(index, cityName) {
 }
 
 // Default cities
-createCard(0, "Delhi");
-createCard(1, "Moscow");
-createCard(2, "Tokyo");
+createCard(0, "Tokyo");
+createCard(1, "Delhi");
+createCard(2, "Moscow");
 createCard(3, "Timbuktu");
 
 function removeCards() {
