@@ -1,19 +1,22 @@
 # **Weather App**
 
-A simple and elegant Weather App made with HTML, CSS, JS
+A simple and elegant weather app made with HTML, CSS and JS.
 
-<a href="https://zakariyaq313.github.io/weather-app/"><img src="images/version-3.png"></a>
+<a href="https://zakariyaq313.github.io/weather-app/"><kbd><img src="images/version-3.png"></kbd></a>
 
+&nbsp;
 # **Progression**
 
-Version 1 -
+`Version 1 -`
 
-![Picsart_22-03-05_01-14-34-480](images/version-1.png)
+<kbd><img src="images/version-1.png"></kbd>
+&nbsp;
 
-Version 2 -
+`Version 2 -`
 
-![Picsart_22-03-05_01-15-14-024](images/version-2.png)
+<kbd><img src="images/version-2.png"></kbd>
+&nbsp;
 
-Version 3 -
+`Version 3 -`
 
-![Picsart_22-03-05_01-14-11-774](images/version-3.png)
+<kbd><img src="images/version-3.png"></kbd>

@@ -14,9 +14,11 @@
     align-items: center;
     position: relative;
 
-    @include respond(700px){
-        width: 32rem;
-        height: 52rem;
+    @include respond(500px){
+        flex-direction: row;
+        padding: 2rem;
+        width: 100%;
+        height: 20rem;
     }
 }
 
@@ -43,6 +45,10 @@
 
 .time {
     font-size: 1.5rem;
+
+    @include respond(500px) {
+        display: none;
+    }
 }
 
 .skeleton-background::before,
@@ -78,7 +84,7 @@
     animation: shimmer 1s infinite linear;
 
     @include respond(700px){
-        width: 22rem;
+        width: 80%;
     }
 }
 

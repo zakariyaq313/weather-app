@@ -43,6 +43,66 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+.rain {
+  background-image: url("../images/rain.jpg");
+}
+
+.drizzle {
+  background-image: url("../images/drizzle.jpg");
+}
+
+.storm {
+  background-image: url("../images/storm.jpg");
+}
+
+.smoke {
+  background-image: url("../images/smoke.jpg");
+}
+
+.dust {
+  background-image: url("../images/dust.jpg");
+}
+
+.fog {
+  background-image: url("../images/fog.jpg");
+}
+
+.snow {
+  background-image: url("../images/snow.jpg");
+}
+
+.snow-night {
+  background-image: url("../images/snow-night.jpg");
+}
+
+.snow-clouds {
+  background-image: url("../images/snow-clouds.png");
+}
+
+.clouds {
+  background-image: url("../images/clouds.jpg");
+}
+
+.clouds-alt {
+  background-image: url("../images/clouds-alt.png");
+}
+
+.sunny {
+  background-image: url("../images/sunny.png");
+}
+
+.snow {
+  background-image: url("../images/snow.jpg");
+}
+
+.clear {
+  background-image: url("../images/clear.jpg");
+}
+
+.night {
+  background-image: url("../images/night.jpg");
+}
+
 .navigation {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
@@ -189,6 +249,12 @@ main {
     gap: 4rem 5rem;
   }
 }
+@media (max-width: 700px) {
+  .cards {
+    gap: 3rem 3rem;
+    width: 100%;
+  }
+}
 @media (max-width: 600px) {
   .cards {
     margin-top: 5rem;
@@ -198,7 +264,6 @@ main {
 @media (max-width: 500px) {
   .cards {
     margin-top: 4rem;
-    row-gap: 3rem;
   }
 }
 
@@ -236,10 +301,12 @@ main {
   align-items: center;
   position: relative;
 }
-@media (max-width: 700px) {
+@media (max-width: 500px) {
   .card {
-    width: 32rem;
-    height: 52rem;
+    flex-direction: row;
+    padding: 2rem;
+    width: 100%;
+    height: 20rem;
   }
 }
 
@@ -266,6 +333,11 @@ main {
 
 .time {
   font-size: 1.5rem;
+}
+@media (max-width: 500px) {
+  .time {
+    display: none;
+  }
 }
 
 .skeleton-background::before,
@@ -303,7 +375,7 @@ main {
 @media (max-width: 700px) {
   .skeleton-text::before,
 .skeleton-text::after {
-    width: 22rem;
+    width: 80%;
   }
 }
 

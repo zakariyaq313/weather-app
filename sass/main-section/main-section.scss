@@ -36,6 +36,11 @@ main {
         gap: 4rem 5rem;
     }
 
+    @include respond(700px){
+        gap: 3rem 3rem;
+        width: 100%;
+    }
+
     @include respond(600px){
         margin-top: 5rem;
         grid-template-columns: 1fr;
@@ -43,7 +48,6 @@ main {
 
     @include respond(500px){
         margin-top: 4rem;
-        row-gap: 3rem;
     }    
 }
 

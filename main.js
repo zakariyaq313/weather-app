@@ -66,53 +66,65 @@ function setWeather(data, index) {
     }
     
     // Background image depending on weather condition
-    let background;
+    let background,
+        weatherImage;
 
     switch (data.weather[0].main) {
 
         case "Rain":
             background = "rain.jpg";
+            weatherImage = "rain";
         break;
 
         case "Drizzle":
             background = "drizzle.jpg";
+            weatherImage = "drizzle";
         break;
     
         case "Thunderstorm":
             background = "storm.jpg";
+            weatherImage = "storm";
         break;
         
         case "Smoke":
             background = "smoke.jpg";
+            weatherImage = "smoke";
         break;
         
         case "Dust":
         case "Haze":
             background = "dust.jpg";
+            weatherImage = "dust";
         break;
 
         case "Mist":
         case "Fog":
             background = "fog.jpg";
+            weatherImage = "fog";
         break;
 
         case "Snow":
             if ((currentHour >= 7) && (currentHour < 18)) {
                 background = "snow.jpg";
+                weatherImage = "snow";
             } else {
                 background = "snow-night.jpg";
+                weatherImage = "snow-night";
             }
         break;
 
         case "Clouds":
-            if (celsius <= 0) {
+            if (celsius <= 4) {
                 background = "snow-clouds.png";
+                weatherImage = "snow-clouds";
 
             } else {
                 if ((currentHour >= 7) && (currentHour < 18)) {
                     background = "clouds.jpg";
+                    weatherImage = "clouds";
                 } else {
                     background = "clouds-alt.jpg";
+                    weatherImage = "clouds-alt";
                 } 
             }
         break;
@@ -121,24 +133,30 @@ function setWeather(data, index) {
                 if ((currentHour >= 7) && (currentHour < 18)) {
                     if (celsius >= 28) {
                         background = "sunny.png";
+                        weatherImage = "sunny";
                     } else if (celsius <= 0) {
                         background = "snow.jpg";
+                        weatherImage = "snow";
                     } else{
                         background = "clear.jpg";
+                        weatherImage = "clear";
                     }
                 } 
                 
                 else {
                     if (celsius <= 0) {
-                        background = "snow-night.jpg"
+                        background = "snow-night.jpg";
+                        weatherImage = "snow-night";
                     } else {
-                        background = "night.jpg";                        
+                        background = "night.jpg";
+                        weatherImage = "night";
                     }
                 }
         break;
 
         default:
             background = "clear.jpg";
+            weatherImage = "clear";
         break;
     }
 
@@ -147,7 +165,7 @@ function setWeather(data, index) {
     preloaderImage.src = imageUrl;
 
     // Filling appropriate data
-    card.style.backgroundImage = `url(${imageUrl})`;
+    card.classList.add(weatherImage);
     card.children[1].children[1].textContent = data.weather[0].main;
     card.children[2].textContent = time();
     card.children[0].textContent = data.name;
@@ -163,7 +181,7 @@ function setWeather(data, index) {
         setTimeout(() => {
             card.classList.remove("skeleton-background");
         }, 1000);
-    }, 4000);
+    }, 1000);
 }
 
 let cardsContainer = document.querySelector("div.cards");
@@ -220,9 +238,9 @@ function createCard(index, cityName) {
 
 // Default cities
 createCard(0, "Delhi");
-createCard(1, "London");
-createCard(2, "Moscow");
-createCard(3, "Tokyo");
+createCard(1, "Moscow");
+createCard(2, "Tokyo");
+createCard(3, "Timbuktu");
 
 function removeCards() {
     let cards = document.querySelectorAll("div.card");
